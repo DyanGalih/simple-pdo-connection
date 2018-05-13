@@ -14,29 +14,27 @@ class Database{
 
     public function open($sql, $params){
         $stmt = $this->conn->prepare($sql);
-
+        $paramBind = array();
         foreach ($params as $key => $value) {
-            $stmt->bindParam(":".$key, $value);
+             $stmt->bindParam(":".$key, $paramBind[$key]);
+             $paramBind[$key] = $params[$key];
         }
-
         $arr_row = array();
-
         if($stmt->execute()){
             while ($row = $stmt->fetch()) {
                 $arr_row[] = $row;
             }
         }
-
         return $arr_row;
     }
 
     public function execute($sql, $params){
         $stmt = $this->conn->prepare($sql);
-
+        $paramBind = array();
         foreach ($params as $key => $value) {
-            $stmt->bindParam(":".$key, $value);
+             $stmt->bindParam(":".$key, $paramBind[$key]);
+             $paramBind[$key] = $params[$key];
         }
-
 
         if($stmt->execute()){
             return true;
