@@ -17,7 +17,7 @@ class Database{
         $paramBind = array();
         foreach ($params as $key => $value) {
              $stmt->bindParam(":".$key, $paramBind[$key]);
-             $paramBind[$key] = $params[$key];
+             $paramBind[$key] = $value;
         }
         $arr_row = array();
         if($stmt->execute()){
@@ -33,7 +33,7 @@ class Database{
         $paramBind = array();
         foreach ($params as $key => $value) {
              $stmt->bindParam(":".$key, $paramBind[$key]);
-             $paramBind[$key] = $params[$key];
+             $paramBind[$key] = $value;
         }
 
         if($stmt->execute()){
