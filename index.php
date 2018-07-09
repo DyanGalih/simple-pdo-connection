@@ -12,7 +12,7 @@
     $objData = new StdClass;
     $objData->email = "";
 
-    $userData =  $this->open($sql, $objData);
+    $userData =  $db->open($sql, $objData);
 
     /**
      * sample insert data to table users
@@ -23,4 +23,4 @@
     $objInsert->email = "faker@email.com";
     $objInsert->name = "name";
 
-    $userData =  $this->open($sql, $objData);
+    $userData =  $db->execute($sql, $objData);
