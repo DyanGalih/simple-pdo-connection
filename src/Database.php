@@ -7,6 +7,8 @@
 
 namespace WebAppId\SimplePDO;
 
+use PDO;
+
 class Database{
     private $conn;
     
