@@ -19,7 +19,7 @@ class Database
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     
-    public function open($sql, $params)
+    public function open($sql, $params = null)
     {
         $stmt = $this->conn->prepare($sql);
         $arr_row = array();
@@ -55,7 +55,7 @@ class Database
         return $stmt->execute();
     }
     
-    public function execute($sql, $params)
+    public function execute($sql, $params = null)
     {
         if ($params != null && count($params) !== count($params, COUNT_RECURSIVE)) {
             $result = true;
