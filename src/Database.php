@@ -9,71 +9,84 @@ namespace WebAppId\SimplePDO;
 
 use PDO;
 
-class Database{
+class Database
+{
     private $conn;
     
-    public function __construct($configuration){
-        $this->conn = new PDO('mysql:host='.$configuration['database']['host'].';dbname='.$configuration['database']['name'], $configuration['database']['user'], $configuration['database']['password']);
+    public function __construct($configuration)
+    {
+        $this->conn = new PDO('mysql:host=' . $configuration['database']['host'] . ';dbname=' . $configuration['database']['name'], $configuration['database']['user'], $configuration['database']['password']);
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     
-    public function open($sql, $params){
+    public function open($sql, $params)
+    {
         $stmt = $this->conn->prepare($sql);
-        $paramBind = array();
-        $params = get_object_vars($params);
-        foreach ($params as $key => $value) {
-            $stmt->bindParam(":".$key, $paramBind[$key]);
-            $paramBind[$key] = $params[$key];
-        }
         $arr_row = array();
-        if($stmt->execute()){
-            while ($row = $stmt->fetch()) {
-                $arr_row[] = $row;
+        if ($params != null) {
+            $paramBind = array();
+            $params = get_object_vars($params);
+            foreach ($params as $key => $value) {
+                $stmt->bindParam(":" . $key, $paramBind[$key]);
+                $paramBind[$key] = $params[$key];
+            }
+            $arr_row = array();
+            if ($stmt->execute()) {
+                while ($row = $stmt->fetch()) {
+                    $arr_row[] = $row;
+                }
             }
         }
         return $arr_row;
     }
     
-    private function __execute($sql, $param){
+    private function __execute($sql, $params)
+    {
         $stmt = $this->conn->prepare($sql);
-        $paramBind = array();
-        foreach ($param as $key => $value) {
-            $stmt->bindParam(":".$key, $paramBind[$key]);
-            $paramBind[$key] = $value;
+        if ($params != null) {
+            $paramBind = array();
+            $params = get_object_vars($params);
+            foreach ($params as $key => $value) {
+                $stmt->bindParam(":" . $key, $paramBind[$key]);
+                $paramBind[$key] = $value;
+            }
         }
         
         return $stmt->execute();
     }
     
-    public function execute($sql, $params){
-        if(count($params) !== count($params, COUNT_RECURSIVE)){
+    public function execute($sql, $params)
+    {
+        if ($params != null && count($params) !== count($params, COUNT_RECURSIVE)) {
             $result = true;
             $this->conn->beginTransaction();
             
-            for ($i=0; $i < count($params) ; $i++) {
-                if(!$this->__execute($sql, $params[$i])){
+            for ($i = 0; $i < count($params); $i++) {
+                if (!$this->__execute($sql, $params[$i])) {
                     $result = false;
                     break;
                 }
             }
             
-            if($result){
+            if ($result) {
                 $this->conn->commit();
-            }else{
+            } else {
                 $this->conn->rollBack();
             }
-        }else{
+        } else {
             $result = $this->__execute($sql, $params);
         }
         
         return $result;
     }
     
-    public function getLastId(){
+    public function getLastId()
+    {
         return $this->conn->lastInsertId();
     }
     
-    public function __destruct(){
+    public function __destruct()
+    {
         $this->conn = null;
     }
 }
