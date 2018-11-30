@@ -1,0 +1,21 @@
+{
+  "name": "webappid/simplepdo",
+  "description": "Simple class connection using PDO for mysql database",
+  "type": "library",
+  "license": "mit",
+  "authors": [
+    {
+      "name": "Dyan Galih",
+      "email": "dyan.galih@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "webappid\\simplepdo\\": "src/"
+    }
+  }
+}

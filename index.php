@@ -1,7 +1,7 @@
 <?php
     include_once "config.php";
 
-    include_once "database.php";
+    include_once "Database.php";
 
     $db = new Database($configuration);
 
