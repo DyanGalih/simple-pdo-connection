@@ -5,7 +5,7 @@
  * Date : 2018-05-02
  */
 
-namespace WebAppId\SimplePdo;
+namespace WebAppId\SimplePDO;
 
 class Database{
     private $conn;

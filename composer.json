@@ -15,7 +15,7 @@
   },
   "autoload": {
     "psr-4": {
-      "webappid\\simplepdo\\": "src/"
+      "WebAppId\\SimplePDO\\": "src"
     }
   }
 }
