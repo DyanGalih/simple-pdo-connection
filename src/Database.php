@@ -22,7 +22,7 @@ class Database
     public function open($sql, $params = null)
     {
         $stmt = $this->conn->prepare($sql);
-        $arr_row = array();
+        
         if ($params != null) {
             $paramBind = array();
             $params = get_object_vars($params);
@@ -30,13 +30,15 @@ class Database
                 $stmt->bindParam(":" . $key, $paramBind[$key]);
                 $paramBind[$key] = $params[$key];
             }
-            $arr_row = array();
-            if ($stmt->execute()) {
-                while ($row = $stmt->fetch()) {
-                    $arr_row[] = $row;
-                }
+        }
+        
+        $arr_row = array();
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch()) {
+                $arr_row[] = $row;
             }
         }
+        
         return $arr_row;
     }
     
